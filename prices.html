@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List: Manual Overrides</title>
+    <style>
+        :root { 
+            --accent: #3498db; 
+            --bg: #f8f9fa; 
+            --text: #2d3436; 
+            --success: #27ae60; 
+            --gray: #95a5a6; 
+            --danger: #e74c3c;
+            --custom: #8e44ad; /* Purple for custom prices */
+        }
+        body { font-family: 'Segoe UI', sans-serif; max-width: 500px; margin: 20px auto; padding: 20px; background: var(--bg); color: var(--text); }
+        
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .input-box { flex: 2; padding: 15px; border: 2px solid #ddd; border-radius: 12px; font-size: 16px; outline: none; }
+        .budget-box { flex: 1; padding: 15px; border: 2px solid var(--accent); border-radius: 12px; font-size: 16px; outline: none; background: #fff; }
+
+        .product-folder { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 15px; }
+
+        .folder-header { 
+            background: #f1f2f6; padding: 12px 20px; font-size: 0.8rem; text-transform: uppercase; 
+            color: var(--gray); font-weight: bold; display: flex; justify-content: space-between; 
+            cursor: pointer; border-bottom: 1px solid #eee;
+        }
+
+        .variety-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #f1f1f1; cursor: pointer; }
+        .variety-row:hover { background: #f9f9f9; }
+
+        /* Custom Price Button */
+        .custom-price-btn { 
+            font-size: 0.7rem; color: var(--custom); border: 1px solid var(--custom); 
+            padding: 2px 6px; border-radius: 4px; margin-left: 10px; cursor: pointer;
+        }
+        .custom-price-btn:hover { background: var(--custom); color: white; }
+
+        .active-selection { background: #e8f8f1; border-left: 5px solid var(--success); }
+        .striked { opacity: 0.4; text-decoration: line-through; }
+
+        .price { font-family: monospace; font-weight: bold; color: var(--success); }
+        .manual-flag { color: var(--custom); font-size: 0.7rem; vertical-align: middle; margin-right: 5px; }
+        
+        .total-bar {
+            position: sticky; bottom: 0; background: #2d3436; color: white;
+            padding: 20px; border-radius: 12px; margin-top: 30px;
+            transition: background 0.3s ease;
+        }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+        .budget-status { font-size: 0.85rem; display: flex; justify-content: space-between; color: var(--gray); }
+        
+        .over-budget { background: var(--danger) !important; }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <input type="text" id="itemInput" class="input-box" placeholder="Search or Type new item...">
+        <input type="number" id="budgetInput" class="budget-box" placeholder="Budget $" step="0.01">
+    </div>
+
+    <div id="listContainer"></div>
+
+    <div class="total-bar" id="totalBar">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="totalDisplay">$0.00</span>
+        </div>
+        <div class="budget-status">
+            <span id="budgetLabel">No Budget Set</span>
+            <span id="remainingDisplay"></span>
+        </div>
+    </div>
+
+    <script>
+        const inventory = {
+            "bread": { "category": "Bakery", "varieties": { "White Bread": 1.50, "Brown Bread": 1.75, "Whole Wheat": 2.10 } },
+            "milk": { "category": "Dairy", "varieties": { "Whole Milk": 2.50, "Low Fat (2%)": 2.25, "Almond Milk": 3.50 } }
+        };
+
+        let grandTotal = 0;
+        let userBudget = 0;
+        const folderRegistry = {}; 
+
+        const itemInput = document.getElementById('itemInput');
+        const budgetInput = document.getElementById('budgetInput');
+        const listContainer = document.getElementById('listContainer');
+
+        budgetInput.addEventListener('input', (e) => {
+            userBudget = parseFloat(e.target.value) || 0;
+            updateUI();
+        });
+
+        itemInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && itemInput.value.trim() !== "") {
+                const raw = itemInput.value.trim().toLowerCase();
+                const match = raw.match(/(.+?)\s*[xX]\s*(\d+)/);
+                let query = raw;
+                let qty = 1;
+
+                if (match) { query = match[1].trim(); qty = parseInt(match[2]); }
+
+                const id = "folder_" + Date.now();
+                // Check if product exists, if not, create a "Custom" entry
+                const productData = inventory[query] || { category: "Uncategorized", varieties: { [query]: 0 } };
+                
+                folderRegistry[id] = { productKey: query, category: productData.category, varieties: productData.varieties, qty: qty, isOpen: true, selections: {} };
+                renderFolder(id);
+                itemInput.value = "";
+            }
+        });
+
+        function renderFolder(id) {
+            const data = folderRegistry[id];
+            let folderDiv = document.getElementById(id) || document.createElement('div');
+            
+            if (!folderDiv.id) {
+                folderDiv.id = id;
+                folderDiv.className = 'product-folder';
+                listContainer.prepend(folderDiv);
+            }
+
+            const selectedCount = Object.keys(data.selections).length;
+
+            folderDiv.innerHTML = `
+                <div class="folder-header" onclick="toggleFolder('${id}')">
+                    <span>${data.category}: ${data.productKey} 
+                        ${selectedCount > 0 ? `<span class="count-badge">${selectedCount}</span>` : ''}
+                    </span>
+                    <span>${data.isOpen ? '▾ Close' : '▸ Open'}</span>
+                </div>
+            `;
+
+            const body = document.createElement('div');
+            if (data.isOpen) {
+                for (let [name, price] of Object.entries(data.varieties)) {
+                    const totalPrice = price * data.qty;
+                    const isPicked = data.selections[name];
+                    
+                    const row = document.createElement('div');
+                    row.className = `variety-row ${isPicked ? 'active-selection' : ''}`;
+                    row.innerHTML = `
+                        <div>
+                            <span>${name}</span>
+                            <span class="custom-price-btn" onclick="setManualPrice(event, '${id}', '${name}')">Edit Price</span>
+                        </div>
+                        <span class="price">${price > 0 ? '$' + totalPrice.toFixed(2) : '--'}</span>
+                    `;
+                    
+                    row.onclick = (e) => {
+                        if (price === 0) return setManualPrice(e, id, name);
+                        toggleSelection(id, name, totalPrice);
+                        renderFolder(id);
+                    };
+                    body.appendChild(row);
+                }
+            } else {
+                for (let [name, details] of Object.entries(data.selections)) {
+                    const row = document.createElement('div');
+                    row.className = `variety-row active-selection ${details.isStriked ? 'striked' : ''}`;
+                    row.innerHTML = `
+                        <span>${details.isManual ? '<span class="manual-flag">✎</span>' : ''}${name} <small>(x${data.qty})</small></span>
+                        <span class="price">$${details.price.toFixed(2)}</span>
+                    `;
+                    row.onclick = (e) => {
+                        e.stopPropagation();
+                        details.isStriked = !details.isStriked;
+                        grandTotal += (details.isStriked ? -details.price : details.price);
+                        updateUI();
+                        renderFolder(id);
+                    };
+                    body.appendChild(row);
+                }
+            }
+            folderDiv.appendChild(body);
+        }
+
+        function setManualPrice(event, folderId, varietyName) {
+            event.stopPropagation();
+            const data = folderRegistry[folderId];
+            const manualPrice = prompt(`Enter total price for ${varietyName} (x${data.qty}):`, "0.00");
+            
+            if (manualPrice !== null) {
+                const priceNum = parseFloat(manualPrice) || 0;
+                
+                // If it was already selected, subtract old price first
+                if (data.selections[varietyName] && !data.selections[varietyName].isStriked) {
+                    grandTotal -= data.selections[varietyName].price;
+                }
+
+                data.selections[varietyName] = { price: priceNum, isStriked: false, isManual: true };
+                grandTotal += priceNum;
+                updateUI();
+                renderFolder(folderId);
+            }
+        }
+
+        function toggleSelection(id, name, price) {
+            const data = folderRegistry[id];
+            if (data.selections[name]) {
+                if (!data.selections[name].isStriked) grandTotal -= data.selections[name].price;
+                delete data.selections[name];
+            } else {
+                data.selections[name] = { price: price, isStriked: false, isManual: false };
+                grandTotal += price;
+            }
+            updateUI();
+        }
+
+        function toggleFolder(id) {
+            folderRegistry[id].isOpen = !folderRegistry[id].isOpen;
+            renderFolder(id);
+        }
+
+        function updateUI() {
+            const currentTotal = Math.max(0, grandTotal);
+            document.getElementById('totalDisplay').innerText = `$${currentTotal.toFixed(2)}`;
+            const totalBar = document.getElementById('totalBar');
+            const remainingDisplay = document.getElementById('remainingDisplay');
+            const budgetLabel = document.getElementById('budgetLabel');
+
+            if (userBudget > 0) {
+                const remaining = userBudget - currentTotal;
+                budgetLabel.innerText = `Budget: $${userBudget.toFixed(2)}`;
+                remainingDisplay.innerText = remaining < 0 ? `Over by $${Math.abs(remaining).toFixed(2)}` : `Left: $${remaining.toFixed(2)}`;
+                totalBar.className = remaining < 0 ? "total-bar over-budget" : "total-bar";
+            }
+        }
+    </script>
+</body>
+</html>
