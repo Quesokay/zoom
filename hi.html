@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sugar Layer | The Sweetest Experience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#ffd9df",
+                    "on-surface-variant": "#5b3f45",
+                    "primary-fixed": "#ffd9df",
+                    "tertiary-fixed-dim": "#fabd00",
+                    "surface-tint": "#bb0054",
+                    "inverse-primary": "#ffb1c1",
+                    "on-tertiary-fixed": "#261a00",
+                    "surface-container-highest": "#e7e1e3",
+                    "surface-container-high": "#ece7e9",
+                    "secondary-fixed": "#a1efff",
+                    "inverse-surface": "#323031",
+                    "tertiary-fixed": "#ffdf9e",
+                    "tertiary-container": "#ffdf9e",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#ffb1c1",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1d1b1d",
+                    "surface": "#fef8fa",
+                    "on-tertiary-container": "#5b4300",
+                    "on-error-container": "#93000a",
+                    "outline": "#906e75",
+                    "primary": "#bb0054",
+                    "on-primary-fixed-variant": "#8f003f",
+                    "on-secondary-fixed": "#001f25",
+                    "background": "#fef8fa",
+                    "on-primary-container": "#8f003f",
+                    "inverse-on-surface": "#f5eff1",
+                    "on-primary": "#ffffff",
+                    "on-background": "#1d1b1d",
+                    "surface-container-low": "#f8f2f4",
+                    "surface-dim": "#ded9db",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#a1efff",
+                    "secondary-fixed-dim": "#44d8f1",
+                    "tertiary": "#785900",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#3f0018",
+                    "on-secondary-container": "#004e59",
+                    "on-secondary-fixed-variant": "#004e59",
+                    "secondary": "#006876",
+                    "surface-container": "#f2ecee",
+                    "surface-bright": "#fef8fa",
+                    "surface-variant": "#e7e1e3",
+                    "on-tertiary-fixed-variant": "#5b4300",
+                    "outline-variant": "#e4bdc3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-nav { backdrop-filter: blur(12px); }
+        .candy-gradient { background: linear-gradient(135deg, #bb0054 0%, #ffb1c1 100%); }
+        .honey-gradient { background: linear-gradient(135deg, #785900 0%, #fabd00 100%); }
+        .teal-gradient { background: linear-gradient(135deg, #006876 0%, #44d8f1 100%); }
+        
+        /* Mobile Menu Transitions */
+        #mobile-menu {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            transform: translateY(-100%) scale(0.95);
+            pointer-events: none;
+            opacity: 0;
+        }
+        #mobile-menu.active {
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            opacity: 1;
+        }
+        .burger-line {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .active .burger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .active .burger-line:nth-child(2) { opacity: 0; }
+        .active .burger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-center pt-4 px-4">
+<nav class="bg-white/80 dark:bg-pink-950/80 backdrop-blur-md rounded-full max-w-[95%] w-full flex justify-between items-center px-6 md:px-8 py-3 shadow-xl shadow-pink-900/5 transition-all duration-300 relative z-[60]">
+<div class="text-2xl font-black tracking-tight text-pink-700 dark:text-pink-400">Sugar Layer</div>
+<!-- Desktop Nav -->
+<div class="hidden lg:flex items-center gap-8 font-plus-jakarta text-body-lg text-neutral-800 dark:text-neutral-100">
+<a class="text-pink-700 dark:text-pink-300 font-bold border-b-2 border-pink-500 pb-1 hover:scale-105 transition-transform duration-300" href="#new-arrivals">Shop All</a>
+<a class="text-neutral-600 dark:text-neutral-400 hover:text-pink-500 hover:scale-105 transition-transform duration-300" href="#new-arrivals">New Arrivals</a>
+<a class="text-neutral-600 dark:text-neutral-400 hover:text-pink-500 hover:scale-105 transition-transform duration-300" href="#best-sellers">Best Sellers</a>
+<a class="text-neutral-600 dark:text-neutral-400 hover:text-pink-500 hover:scale-105 transition-transform duration-300" href="#candy-club">Gift Sets</a>
+</div>
+<div class="flex items-center gap-2 md:gap-4">
+<button class="hidden sm:flex p-2 text-pink-700 dark:text-pink-300 hover:scale-110 transition-transform duration-300 active:scale-95">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="p-2 text-pink-700 dark:text-pink-300 hover:scale-110 transition-transform duration-300 active:scale-95">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<div class="hidden sm:block w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Customer account profile" class="w-full h-full object-cover" data-alt="close-up portrait of a happy person with colorful candy-themed makeup and hair accessories, bright studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1if3uRo1RBLK26u5QDpR_Cr64dG5Irg8DM-Sv6MOLWq8a8FoytmzuUl3WO3Mkg6Jtl-zhNdjvsvP_vmKtKa5w4hSvvmxO8F08t27vhAT4uB4daX3WF05MeqGoSfehuUcgU2luUUx47J4lawkNHQDVnwu6znn1S4PBSCxgwahwTHem7HHvz4n9BTOIV-bXFd1vQ89l1btPf0KuzuKNYYNNAycCFXJTlBYrdy9C7mFLaAhA1utOcL5iXmJuhSB2qhiwTktzNI7Ubaw"/>
+</div>
+<!-- Hamburger Button -->
+<button class="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-[6px] focus:outline-none bg-pink-50 dark:bg-pink-900/30 rounded-full ml-1" id="menu-toggle">
+<span class="burger-line w-5 h-0.5 bg-pink-700 dark:bg-pink-300 rounded-full"></span>
+<span class="burger-line w-5 h-0.5 bg-pink-700 dark:bg-pink-300 rounded-full"></span>
+<span class="burger-line w-5 h-0.5 bg-pink-700 dark:bg-pink-300 rounded-full"></span>
+</button>
+</div>
+</nav>
+<!-- Mobile Menu Overlay -->
+<div class="lg:hidden absolute top-20 left-4 right-4 bg-white dark:bg-neutral-900 rounded-[2.5rem] shadow-2xl p-8 border border-pink-100 dark:border-pink-900/30" id="mobile-menu">
+<div class="flex flex-col gap-6 items-center text-center">
+<a class="mobile-nav-link text-2xl font-black text-pink-700 dark:text-pink-400 py-2" href="#new-arrivals">Shop All</a>
+<a class="mobile-nav-link text-2xl font-black text-neutral-800 dark:text-neutral-100 py-2" href="#new-arrivals">New Arrivals</a>
+<a class="mobile-nav-link text-2xl font-black text-neutral-800 dark:text-neutral-100 py-2" href="#best-sellers">Best Sellers</a>
+<a class="mobile-nav-link text-2xl font-black text-neutral-800 dark:text-neutral-100 py-2" href="#candy-club">Gift Sets</a>
+<div class="w-full h-px bg-pink-100 dark:bg-pink-900/30 my-2"></div>
+<div class="flex gap-4">
+<button class="w-14 h-14 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 flex items-center justify-center">
+<span class="material-symbols-outlined scale-125" data-icon="favorite">favorite</span>
+</button>
+<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Account" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1if3uRo1RBLK26u5QDpR_Cr64dG5Irg8DM-Sv6MOLWq8a8FoytmzuUl3WO3Mkg6Jtl-zhNdjvsvP_vmKtKa5w4hSvvmxO8F08t27vhAT4uB4daX3WF05MeqGoSfehuUcgU2luUUx47J4lawkNHQDVnwu6znn1S4PBSCxgwahwTHem7HHvz4n9BTOIV-bXFd1vQ89l1btPf0KuzuKNYYNNAycCFXJTlBYrdy9C7mFLaAhA1utOcL5iXmJuhSB2qhiwTktzNI7Ubaw"/>
+</div>
+</div>
+<p class="text-pink-400 dark:text-pink-600 font-bold italic">Stay sweet!</p>
+</div>
+</div>
+</header>
+<main class="mt-28">
+<!-- Hero Section -->
+<section class="relative px-6 max-w-7xl mx-auto overflow-visible mb-24">
+<div class="flex flex-col lg:flex-row items-center gap-12 py-12">
+<div class="flex-1 space-y-8 z-10 text-center lg:text-left">
+<span class="inline-block px-4 py-1.5 rounded-full bg-tertiary-container text-on-tertiary-container font-bold text-label-lg tracking-wider">NEW COLLECTION OUT NOW</span>
+<h1 class="text-[3.5rem] md:text-[5.5rem] font-black leading-[0.95] tracking-tighter text-on-surface">
+                    Sugar Rush <br/> <span class="text-primary italic">Happiness!</span>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    Dive into a world where every bite is a burst of joy. Hand-crafted, gourmet sweets delivered straight to your door in a whirlwind of color.
+                </p>
+<div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+<button class="px-10 py-5 rounded-full candy-gradient text-on-primary font-bold text-lg hover:scale-105 transition-transform duration-300 active:scale-95 shadow-lg shadow-primary/20">
+                        Taste the Magic
+                    </button>
+<button class="px-10 py-5 rounded-full bg-secondary-container text-on-secondary-container font-bold text-lg hover:scale-105 transition-transform duration-300 active:scale-95">
+                        Our Story
+                    </button>
+</div>
+</div>
+<div class="flex-1 relative w-full max-w-xl lg:max-w-none">
+<!-- Overlapping Hero Graphics -->
+<div class="relative w-full aspect-square">
+<div class="absolute inset-0 bg-primary-container/20 rounded-full blur-3xl"></div>
+<img class="absolute top-0 right-0 w-3/4 z-10 hover:rotate-6 transition-transform duration-700" data-alt="vibrant oversized 3D rendered gummy bear with translucent texture and glowing internal light, hyper-realistic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7pWIKa-Gt_quw1TnIvJvrh9Jgg4yIS_bPcK1LYImxdwm5Ks4iPocJoN_qBsJMrsy-3ltYq1VYfz_gqJFUamxxJFX00RADd49_q7uqRqIxX5FnPA-2NCR1yd6BSpMlGEXCthpurNQD9iCaIEB5b9NkTU90p138o10N3_-ckEPBzGaIn5szEJnbYM_gpd8P3MsNX5xkC_QGa0pzGkfgv3fo8XBjQIFJBCQw4iCS_tg0h0NzNrhdOq45ceWH2MN_Cf5eNoXwDbydCWQ"/>
+<img class="absolute bottom-10 left-0 w-2/3 z-20 hover:-rotate-6 transition-transform duration-700" data-alt="glossy colorful hard candy swirl lollipop with sprinkles embedded in the surface, bright studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD05SkGXg-31BB6ZKtKO5KacYuQ94lB30RvrPDhgWDk_b7bXdOB9QsRALuUtFY29WvYMnbJKKcHATK9ddPbau_j7jqap-7XukoCbAOsFVQMLG7_dwLUv3nah6GkOGukAklLdA41Ezpq0pjuOVwn4h4OAd8tUR8wBNTRM6HSLT1V4BQSYYvd-8wTFWhCXKoM_tVQmXeGLk1jaC6iMR77PRb8F4OjhY5bI5ufChpDoznZYqH2AUeIy0IlrE351L2Y9aGyV1s23HD6uHk"/>
+<div class="absolute -bottom-4 -right-4 bg-white p-6 rounded-xl shadow-xl z-30 flex items-center gap-4">
+<div class="p-3 bg-secondary-container rounded-full">
+<span class="material-symbols-outlined text-secondary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">100% Organic</p>
+<p class="text-sm text-on-surface-variant">Fruit Extracts</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sweetest New Arrivals (Bento Grid) -->
+<section class="px-6 py-24 bg-surface-container-low rounded-t-[4rem] relative overflow-hidden scroll-mt-24" id="new-arrivals">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
+<div class="space-y-2">
+<h2 class="text-4xl md:text-5xl font-black text-on-surface tracking-tight">Sweetest New Arrivals</h2>
+<p class="text-on-surface-variant text-lg">Freshly made in our candy kitchen this morning.</p>
+</div>
+<a class="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all" href="#">
+                    View All New <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto">
+<!-- Large Feature Card -->
+<div class="md:col-span-12 lg:col-span-7 bg-surface-container-lowest p-10 rounded-xl flex flex-col justify-between group overflow-hidden relative min-h-[400px]">
+<div class="z-10">
+<span class="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full text-sm font-bold">$12.99</span>
+<h3 class="text-3xl font-bold mt-6 mb-2">Cloud Nine Marshmallows</h3>
+<p class="text-on-surface-variant max-w-sm">Hand-spun with vanilla bean and a hint of sparkling lavender sugar.</p>
+</div>
+<div class="relative h-64 md:h-auto overflow-visible mt-4">
+<img class="absolute bottom-[-10%] right-[-10%] w-[80%] md:w-[60%] lg:w-[80%] group-hover:scale-110 transition-transform duration-500" data-alt="stack of pastel colored artisanal marshmallows dusted with shimmering sugar crystals on a white plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_VqM647DyOqKgHcL7lly_-PUOXkJ7wCXAKJHIXEkXCNnDTNsTWzHH-LpVktceOp8vLcsQ_99kNxTQgX324wCqnfGlbo0tgGShdejmEqIUUfXQ-x52pqKTdIOKS1N4n7b36uPdHNsN4tQOBxQO0XSa9o6wOSStnI5LoRmt3CiL2ZfgI_G7F4r4z0kzZ3GF-GqiGV6W_HreAgXoqiUt_B0ZtwueYUts8qB_Fwlb72wvBIXPgt-nJgzZrfV4lKDOydqtYeE2Sm1aBps"/>
+</div>
+<button class="w-14 h-14 rounded-full candy-gradient text-on-primary flex items-center justify-center absolute bottom-10 left-10 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<!-- Side Grid -->
+<div class="md:col-span-12 lg:col-span-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+<div class="bg-primary-container p-8 rounded-xl flex items-center justify-between group overflow-hidden">
+<div class="max-w-[50%]">
+<h3 class="text-2xl font-bold text-on-primary-container">Sour Neon Worms</h3>
+<p class="text-on-primary-fixed-variant font-bold text-xl mt-2">$8.50</p>
+</div>
+<img class="w-1/2 group-hover:translate-x-4 transition-transform" data-alt="pile of bright neon gummy worms with sour sugar coating, vivid greens, pinks and blues" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzXUNjH-aLpdRV53_il_myO4BDK4nhRTi1FFdPi41XIjPtCEZ8h8f53uMivMCo40Tc6R7FT29sPOTHeiRG3V4Ubx8i9WfjywPsq4c9Yz92y2NqVaX0WKTBZqLsjc95Z1Q02rE_B6tpjdXPk0VyhVAiDzxWuuDuGS56Fzq29qTm8JZTm7DQvBrUxgSVQ3QIU2afYgzQ6g_88ddIb1UxssQ2XhhfitJDZsacD5KYxyI516am1LG5m0HD9WKpyYByvy0ilU-xsbIzsyQ"/>
+</div>
+<div class="bg-tertiary-container p-8 rounded-xl flex items-center justify-between group overflow-hidden scroll-mt-24" id="best-sellers">
+<div class="max-w-[50%]">
+<h3 class="text-2xl font-bold text-on-tertiary-container">Honey Glazed Toffee</h3>
+<p class="text-on-tertiary-fixed-variant font-bold text-xl mt-2">$14.00</p>
+</div>
+<img class="w-1/2 group-hover:translate-y-[-10px] transition-transform" data-alt="golden pieces of honey toffee with cracks and honeycomb texture, drizzled with caramel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg_3kH5hbXEqKmV_sxuMRHGs9K6vYFMjiAgCCiUXrtnVsfyfUFp3eUv0gWopnumvWo5LzyA46xlZQmDRKSVCkqN0OU-M9gA6qgO2lJcJSH5FF0snDscXoYEori9SiJkpLni1fz-53mYpjh3C57-S2O7LDIBkeae92hezHfauo6QOedqZZVz8YPeaBZyOcc0EK3RHnCL94uOk4x3X5zRt-oLDBvl2VRleB1TNachlS1cRc8jCkp9ed-bVkrlDmHFgsJvN1F2vhH8iI"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Candy by Color Section -->
+<section class="px-6 py-24 max-w-7xl mx-auto">
+<div class="text-center mb-16 space-y-4">
+<h2 class="text-5xl font-black text-on-surface tracking-tight">Shop by Your Vibe</h2>
+<p class="text-xl text-on-surface-variant max-w-2xl mx-auto">Because sometimes you just need everything to be pink. Or blue. Or a rainbow.</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Color Bubble 1 -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-full aspect-square rounded-full bg-pink-100 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500 shadow-inner">
+<img class="w-full h-full object-contain" data-alt="assorted pink candies including heart gummies, jelly beans, and rock candy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgjys_0iqn49BKbpFBBNcE4o_39k7mo-AOr0UTHfUH9M8AbM__Zmy3t2Fva59bSl8ugHTXqk-Bc_RZ_B6df_zC5d_8y9ZTlT177WkQwyvLHn14FeIAx1R_Io9f3MHMqc1rTSrRYYCyG8-4rIcq8zEAHjvpgdhgKEt5CdHN4LtyKhNBKMInYd8RfzI44_yqBESs40Q1OhqwFep-jlOMx_CAZBcAuKk_tJ49hwiuEKLjjh7vtpyNcxO8wdktMBOnzYVToNCyyH0ox3g"/>
+</div>
+<h4 class="mt-6 text-xl font-bold text-pink-700">Pink Passion</h4>
+</div>
+<!-- Color Bubble 2 -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-full aspect-square rounded-full bg-blue-100 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500 shadow-inner">
+<img class="w-full h-full object-contain" data-alt="vibrant blue candies, blueberry rings, and blue raspberry belts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnBvrJhnMQr3QEIjS8lSOIARA-Jyd1-R-WWdQ1ZRRyslKAQOVfAem7u-VA72wifVSbeEojT4J885ucgH6M68xI7Dw3_m5Xy42asPZTywMlKSu48J-Y0ZNsXgd6KPzp180T-_QW1uq1lwVNjleknnajHIiCvhinYQIZIDmaZ4zyKttGywoat_PVFy4rA6BRmWpTlooKmr66Wgv_yAxBIWGhvu33SN8CRRQso08cER7pMwji13LJRqRiUDP6Bz8NIwDVnBuuko7QLpM"/>
+</div>
+<h4 class="mt-6 text-xl font-bold text-blue-700">Electric Blue</h4>
+</div>
+<!-- Color Bubble 3 -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-full aspect-square rounded-full bg-yellow-100 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500 shadow-inner">
+<img class="w-full h-full object-contain" data-alt="lemon drops, banana gummies, and golden caramel balls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAn0thdYqMXxp-jMN2gho1Vq9-T3eUWO_3xDc8KvHkb871kz7e8GQXc1vJytvdGtGULtu2FOnqctQI0s_v4FP6KzLD6Q8ilBUBk9GRTEiIXZpQNULgcQe-K_RoIlvhp7RDc5dquUOviK_elyQuW_3NauWecVMxwhwOcwzF-SSk6PRxRXREhH4om2DYz1lmL_gCH87haPBiRJ0iL8LKWLnkQHO49KgktTh_t53PG9iuC6Lb2fnWe-L7ne1sgP3vztzpYNSAK5pjETw"/>
+</div>
+<h4 class="mt-6 text-xl font-bold text-tertiary">Mellow Yellow</h4>
+</div>
+<!-- Color Bubble 4 -->
+<div class="flex flex-col items-center group cursor-pointer">
+<div class="w-full aspect-square rounded-full bg-purple-100 flex items-center justify-center p-8 group-hover:scale-105 transition-transform duration-500 shadow-inner">
+<img class="w-full h-full object-contain" data-alt="grape jelly candies, purple licorice, and lavender chocolates" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC78FH7JXr8N8n5xIF2gDq5zhw7P_t82W0g0Q6saQzrahkQugyv1XnEjkfVVv6HImV2w6315fJTfv2AKVPh1GFoBYwcLYvaLftthH1oMRhB7wYAhRDuW3epsbTrwayGMIYOOHJn0syLeGv-boXExaxK6tu6BCLKsD2B2Qy31CZPBEspMK7tn9PVZ6TT5fKN9nfJJZlRSHwdzzt-h8ivnvpKkxbITbdjuyreBnyWmA1le4XS7pR92MkEHZxo8KvDzMY8yEVhBP86sRo"/>
+</div>
+<h4 class="mt-6 text-xl font-bold text-purple-700">Plum Perfection</h4>
+</div>
+</div>
+</section>
+<!-- Candy Club Signup -->
+<section class="px-6 py-24 mb-24 scroll-mt-24" id="candy-club">
+<div class="max-w-7xl mx-auto teal-gradient rounded-xl p-12 md:p-24 relative overflow-hidden text-on-secondary">
+<div class="relative z-10 max-w-2xl">
+<h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">Join the Candy Club <br/> &amp; Get 20% Off!</h2>
+<p class="text-xl opacity-90 mb-10 leading-relaxed">
+                    Become a VIP Sweetheart! Get exclusive early access to limited flavors, free shipping on your birthday, and a monthly box of surprises.
+                </p>
+<form class="flex flex-col sm:flex-row gap-4 max-w-md">
+<input class="flex-1 px-6 py-4 rounded-full bg-white/20 backdrop-blur-md border-none focus:ring-2 focus:ring-white/50 text-white placeholder:text-white/60 text-lg" placeholder="Enter your email" type="email"/>
+<button class="px-8 py-4 rounded-full bg-white text-secondary font-black text-lg hover:bg-secondary-fixed-dim transition-colors shadow-lg">
+                        Sign Up
+                    </button>
+</form>
+<p class="mt-6 text-sm opacity-70 italic font-medium">By signing up, you agree to receive sugar-coated emails. No spam, only sweets!</p>
+</div>
+<!-- Background Decorations -->
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+<img class="absolute top-10 right-20 w-48 opacity-40 animate-bounce" data-alt="3D floating pink donut with sprinkles and chocolate drizzle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR1fxiPeQcXTKFJwATh7SWkhq2Ayyi8y1yQwu97Ubn0tZq36owM5JEEDQ0_-8bEi38hBEKXMKKBvEsvVgSeqHea8-dRAPcyo9CKQcnkINDLny1qBTvZXZn3_0ZadFJOghbqDWAOwY8Tx0I_hVCESoVYdWcRJgDpOnM_T2zW9otj5qUD3uAsmazWM0CKlu4H1VcuLzGSjP0gcTZ7k_4KsopT0SG-79INNM8cBJ40rHHQ9r26Pf9qmSAvAILatTW0Vl7SIawv6vpG1A" style="animation-duration: 4s"/>
+<img class="absolute bottom-10 right-40 w-32 opacity-30 animate-pulse" data-alt="3D floating wrapped candy in metallic blue foil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC68UdhiroJ3Yv-G6V_GgteAXUZ0wnIvn6WKCuQue-Ywu6IMb5NPb6VHMqhUnlEAKgHzBdhsJhBkt0qvZ1pQnCLFvQMVOgbmCmdyfXQTfrajl_6Baj5vBX392I6daSJoDhXRQqlIojeFjMbzv_Ti95iozGQehsOKtmmrNbqjPOl95q7Gkg_XCbDt0UXhCSnxo-gA0vg4niltn1yyz5m5_lxgwHlAcPrPTBKhmMOx9XmbzOgY871krEfEoqv2FQOoN7rrDRLBlvcsK0"/>
+</div>
+</section>
+</main>
+<!-- Footer Section -->
+<footer class="w-full bg-pink-50 dark:bg-neutral-950 rounded-t-[3rem] mt-24">
+<div class="flex flex-col items-center gap-8 py-16 px-6 w-full text-center max-w-7xl mx-auto">
+<div class="text-xl font-bold text-pink-700">Sugar Layer</div>
+<div class="flex flex-wrap justify-center gap-8 font-plus-jakarta text-label-lg">
+<a class="text-neutral-500 dark:text-neutral-400 hover:text-pink-500 underline-offset-4 hover:underline transition-all" href="#">Flavor Guide</a>
+<a class="text-neutral-500 dark:text-neutral-400 hover:text-pink-500 underline-offset-4 hover:underline transition-all" href="#">Shipping Info</a>
+<a class="text-neutral-500 dark:text-neutral-400 hover:text-pink-500 underline-offset-4 hover:underline transition-all" href="#candy-club">Candy Club</a>
+<a class="text-neutral-500 dark:text-neutral-400 hover:text-pink-500 underline-offset-4 hover:underline transition-all" href="#">Careers</a>
+<a class="text-neutral-500 dark:text-neutral-400 hover:text-pink-500 underline-offset-4 hover:underline transition-all" href="#">Privacy Policy</a>
+</div>
+<div class="flex gap-6 mt-4">
+<a class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-pink-700 hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="mood">mood</span>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-pink-700 hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-pink-700 hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+</a>
+</div>
+<div class="w-full h-px bg-pink-100 dark:bg-pink-900/30 my-4"></div>
+<p class="text-neutral-500 dark:text-neutral-400 text-sm font-medium">
+            © 2024 The Sugar-Coated Layer. All rights reserved.
+        </p>
+</div>
+</footer>
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function toggleMenu() {
+        const isActive = mobileMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        
+        // Prevent scrolling when menu is open
+        document.body.style.overflow = isActive ? 'hidden' : '';
+    }
+
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close menu when clicking a link
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && e.target !== menuToggle) {
+            toggleMenu();
+        }
+    });
+
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+</body></html>
